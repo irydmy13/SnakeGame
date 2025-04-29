@@ -1,4 +1,8 @@
-﻿public class Food : Circle
+﻿namespace SnakeGame
 {
-    public string Type { get; set; } = "normal"; // можно расширять
+    public class Food
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
 }

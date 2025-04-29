@@ -1,5 +1,8 @@
-﻿public class Circle
+﻿namespace SnakeGame
 {
-    public int X { get; set; }
-    public int Y { get; set; }
+    public class Circle
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
 }

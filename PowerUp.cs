@@ -1,6 +1,9 @@
-﻿public class PowerUp
+﻿namespace SnakeGame
 {
-    public int X { get; set; }
-    public int Y { get; set; }
-    public string Effect { get; set; } // "speed", "slow", "bonusPoints"
+    public class PowerUp
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public string Effect { get; set; } // "speed", "slow", "bonusPoints"
+    }
 }

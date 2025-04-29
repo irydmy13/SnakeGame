@@ -1,13 +1,14 @@
-﻿using System;
-
-public class Player
+﻿namespace SnakeGame
 {
-    public string Name { get; private set; }
-
-    public Player(string name)
+    public class Player
     {
-        if (name.Length < 3)
-            throw new ArgumentException("Имя слишком короткое");
-        Name = name;
+        public string Name { get; private set; }
+
+        public Player(string name)
+        {
+            if (name.Length < 3)
+                throw new System.ArgumentException("Имя должно содержать минимум 3 символа.");
+            Name = name;
+        }
     }
 }

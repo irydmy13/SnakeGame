@@ -1,35 +1,76 @@
 ﻿using System.Collections.Generic;
 
-public class Snake
+namespace SnakeGame
 {
-    public List<Circle> Body { get; private set; }
-
-    public Snake()
+    public class Snake
     {
-        Body = new List<Circle>();
-        Body.Add(new Circle { X = 10, Y = 5 }); // голова
-    }
+        public List<Circle> Body { get; private set; }
+        private string direction;
 
-    public void Move(string direction)
-    {
-        for (int i = Body.Count - 1; i > 0; i--)
+        public Snake()
         {
-            Body[i].X = Body[i - 1].X;
-            Body[i].Y = Body[i - 1].Y;
+            Body = new List<Circle>();
+            Body.Add(new Circle { X = 10, Y = 5 }); // начальная позиция
+            direction = "right";
         }
 
-        switch (direction)
+        public void Move()
         {
-            case "right": Body[0].X++; break;
-            case "left": Body[0].X--; break;
-            case "up": Body[0].Y--; break;
-            case "down": Body[0].Y++; break;
-        }
-    }
+            for (int i = Body.Count - 1; i > 0; i--)
+            {
+                Body[i].X = Body[i - 1].X;
+                Body[i].Y = Body[i - 1].Y;
+            }
 
-    public void Grow()
-    {
-        var tail = Body[Body.Count - 1];
-        Body.Add(new Circle { X = tail.X, Y = tail.Y });
+            switch (direction)
+            {
+                case "up":
+                    Body[0].Y -= 1;
+                    break;
+                case "down":
+                    Body[0].Y += 1;
+                    break;
+                case "left":
+                    Body[0].X -= 1;
+                    break;
+                case "right":
+                    Body[0].X += 1;
+                    break;
+            }
+        }
+
+        public void ChangeDirection(string newDirection)
+        {
+            // Не даём змейке разворачиваться в обратную сторону
+            if ((direction == "up" && newDirection != "down") ||
+                (direction == "down" && newDirection != "up") ||
+                (direction == "left" && newDirection != "right") ||
+                (direction == "right" && newDirection != "left"))
+            {
+                direction = newDirection;
+            }
+        }
+
+        public void Grow()
+        {
+            Circle tail = Body[Body.Count - 1];
+            Body.Add(new Circle { X = tail.X, Y = tail.Y });
+        }
+
+        public bool HasCollision(int width, int height)
+        {
+            // Столкновение с границей
+            if (Body[0].X < 0 || Body[0].Y < 0 || Body[0].X >= width || Body[0].Y >= height)
+                return true;
+
+            // Столкновение с собой
+            for (int i = 1; i < Body.Count; i++)
+            {
+                if (Body[i].X == Body[0].X && Body[i].Y == Body[0].Y)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }
