@@ -12,6 +12,9 @@ namespace SnakeGame
 {
     public partial class Form1 : Form
     {
+        private PowerUp currentPowerUp; // текущий бонус
+        private Random rnd = new Random(); // для генерации координат и эффекта
+        private int powerUpCounter = 0; // счётчик времени до появления бонуса
         public Form1()
         {
             InitializeComponent();
