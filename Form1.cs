@@ -29,5 +29,16 @@ namespace SnakeGame
         {
 
         }
+        private void GeneratePowerUp()
+        {
+            string[] effects = { "speed", "slow", "bonusPoints" }; // возможные эффекты
+            currentPowerUp = new PowerUp
+            {
+                X = rnd.Next(0, Settings.Width),
+                Y = rnd.Next(0, Settings.Height),
+                Effect = effects[rnd.Next(effects.Length)]
+            };
+        }
     }
 }
+
