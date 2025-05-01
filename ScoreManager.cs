@@ -1,33 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 
-namespace SnakeGame
+class ScoreManager
 {
-    public class ScoreManager
+    const string FilePath = "results.txt";
+
+    // Сохраняем имя и очки
+    public static void SaveScore(string name, int score)
     {
-        private const string FilePath = "results.txt";
+        File.AppendAllText(FilePath, $"{name}:{score}\n");
+    }
 
-        public void SaveScore(string name, int score)
-        {
-            File.AppendAllText(FilePath, $"{name}:{score}\n");
-        }
+    // Показываем топ-5 игроков
+    public static void ShowTopScores()
+    {
+        Console.WriteLine("\nТоп игроков:");
 
-        public List<(string Name, int Score)> LoadScores()
-        {
-            var list = new List<(string, int)>();
-            if (!File.Exists(FilePath)) return list;
-
-            foreach (var line in File.ReadAllLines(FilePath))
+        var lines = File.ReadAllLines(FilePath);
+        var scores = lines
+            .Select(line =>
             {
                 var parts = line.Split(':');
-                if (parts.Length == 2 && int.TryParse(parts[1], out int score))
-                {
-                    list.Add((parts[0], score));
-                }
-            }
+                return (Name: parts[0], Score: int.Parse(parts[1]));
+            })
+            .OrderByDescending(s => s.Score)
+            .Take(5);
 
-            return list.OrderByDescending(x => x.Score).ToList();
+        foreach (var s in scores)
+        {
+            Console.WriteLine($"{s.Name} — {s.Score}");
         }
     }
 }
